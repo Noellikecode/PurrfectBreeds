@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Loader</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <style>
+    #imageContainer img {
+        width: 100%;
+        height: 100%;
+    }
+    .imageContainer {
+        width: 20%;
+        height: 50%;
+    }
+    </style>
+</head>
+<body class="tracking-tight justify-center items-center">
+    <header class="text-black flex border-2 p-5 mb-10 text-center">
+        <h1 class="font-bold tracking-tight text-3xl ml-3 text-orange-600">PurrfectBreeds </h1>
+        <button class="bg-orange-500 hover:bg-orange-600 ml-auto text-white font-bold px-4 xl:px-6 py-2 xl:py-3 rounded mr-5" onclick="copyToClipboard('noelsimonthomas31@gmail.com')">Contact Me</button>
+        <a href="/" class="text-orange-600 hover:text-orange-900 font-bold px-4 xl:px-6 py-2 xl:py-3 rounded mr-5">Home</a>
+
+    </header>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Copied to clipboard: " + text);
+            }, function(err) {
+                console.error("Could not copy text: ", err);
+            });
+            }
+        function displayBreed() {
+        const imageUrl = document.getElementById('imageUrl').value;
+        fetch('/get_breed', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ imageUrl })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const breed = data.breed;
+            const description = data.description;
+            loadModal(breed, description);
+        })
+        .catch(error => {
+            loadModal("Couldn't get breed.");
+        });
+        }
+
+        function loadModal(breed, description) {
+        fetch(`/modal`)
+            .then(response => response.text())
+            .then(html => {
+            const modalContainer = document.getElementById('modal-container');
+            modalContainer.innerHTML = html;
+            const breedElement = modalContainer.querySelector('#breed');
+            breedElement.innerText = breed;
+            const descriptionElement = modalContainer.querySelector('#description');
+            descriptionElement.innerText = description;
+            const closeButton = document.getElementById('closeButton')
+            closeButton.addEventListener('click', () => {
+                modalContainer.remove();
+            });
+            })
+    }
+
+
+
+
+    </script>
+     <div id="modal-container"></div>
+     <div class="flex flex-col justify-center mx-auto">
+         <div class="w-3/4 relative mx-auto">
+           <div class="h-50 relative mx-8 rounded-3xl bg-white px-4 shadow border-4  sm:p-10 md:mx-0 flex">
+             <div class="w-1/2 mx-2">
+               <div class="mx-auto max-w-full">
+                 <div class="flex items-center space-x-5">
+                 </div>
+                 <div class="divide-y divide-gray-200">
+                   <div class="space-y-4 py-8 leading-6 text-gray-700 sm:text-lg sm:leading-7">
+                     <div class="flex flex-col mt-3">
+                       <label class="leading-loose text-orange-600 text-2xl font-bold">Enter your URL</label>
+                       <input type="text" id="imageUrl" class="mb-10 placeholder:-translate-y-24 placeholder-top w-full rounded-md border border-gray-300 px-4 py-2 text-orange-900 focus:border-gray-900 focus:outline-none focus:ring-gray-500 sm:text-sm placeholder-top" placeholder="Event title" />                    </div>
+                       <div class="flex flex-row gap-10 ml-20"> 
+                       <img src="https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80" class="transform rotate-12 border-4 border-orange-600 h-32 rounded-xl">
+                        <img src="https://cdn.britannica.com/91/181391-050-1DA18304/cat-toes-paw-number-paws-tiger-tabby.jpg" class="transform -rotate-12 border-4 border-orange-600 h-48 rounded-xl">
+                    </div>
+                    </div>
+                 </div>
+               </div>
+             </div>
+             <div class="w-1/2 mx-2">
+               <div class="mx-auto max-w-full">
+                 <div class="flex items-center space-x-5">
+                   <div class="block self-start pl-2 text-xl font-semibold text-gray-700"></div>
+                 </div>
+                 <div class="divide-y divide-gray-200">
+                   <div class="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
+                     <div class="flex  flex-col">
+                       <label class="leading-loose mx-auto text-2xl text-orange-600 font-bold">Image Preview:</label>
+                       <div id="imageContainer" class="flex items-center justify-center rounded-lg mx-auto aspect-w-3 aspect-h-4 items-center box border-2 h-64 w-3/4 border-orange-600 justify-center object-contain">
+                        <p id="holder" class="flex text-center justify-center text-sm text-orange-900">Enter your url, to see a preview of your image.</p>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+      
+      <script>
+        const imageUrlInput = document.getElementById('imageUrl');
+        const imageContainer = document.getElementById('imageContainer');
+        const imageHolder = document.getElementById('holder');
+        imageUrlInput.addEventListener('input', () => {
+          const imageUrl = imageUrlInput.value;
+          const imageElement = document.createElement('img');
+          imageElement.src = imageUrl;
+          imageHolder.innerHTML = ''
+          imageElement.addEventListener('click', displayBreed);
+          imageElement.classList.add('w-full', 'h-auto', 'object-contain', 'hover:opacity-50', 'cursor-pointer');
+          imageContainer.innerHTML = '';
+          imageContainer.appendChild(imageElement);
+        });
+      </script>
+      
+         
+</body>
+</html>

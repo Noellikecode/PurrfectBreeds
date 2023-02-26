@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="text-black flex border-2 p-5 mb-10 text-center">
+        <h1 class="font-bold tracking-tight text-3xl ml-3 text-orange-600">PurrfectBreeds </h1>
+        <button class="bg-orange-500 hover:bg-orange-600 ml-auto text-white font-bold px-4 xl:px-6 py-2 xl:py-3 rounded mr-5" onclick="copyToClipboard('noelsimonthomas31@gmail.com')">Contact Me</button>
+    </header>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert("Copied to clipboard: " + text);
+            }, function(err) {
+                console.error("Could not copy text: ", err);
+            });
+            }
+    </script>
+    <div class="text-center">
+    <h1 class="text-6xl text-orange-400 font-extrabold">The purrfect future is</h1>
+    <h2 class="text-6xl text-orange-900 font-extrabold">here!</h2>
+    <p class="text-center text-xl text-orange-900">Information about our furry friends has never been more accessible or convenient!</p>
+    <a href="/try" class="mt-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-orange-500 border rounded-md shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" data-rounded="rounded-md" data-primary="blue-600" data-primary-reset="{}">
+        Try it out!
+        </a>
+    </div>
+    <div class="flex flex-row items-center justify-center">
+        <img className="object-cover"src='https://img.freepik.com/premium-vector/cartoon-people-with-cat-mouse_23-2148978925.jpg'></img>
+        
+    <a href="#" class="block max-w-sm p-6 bg-white border border-gray-500 rounded-lg shadow-lg">
+        <p class="font-normal text-orange-600 dark:text-gray-700">Learning about cats has never been easier, through the power of the PurrfectBreeds!</p>
+    </a>
+
+    </div>
+</body>
+</html>
