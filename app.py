@@ -21,7 +21,7 @@ def get_breed():
     imageUrl = request.json['imageUrl']
     querystring = {"url": imageUrl}
     headers = {
-        "X-RapidAPI-Key": "3d5f46f2eamsh4682c22bd132313p169fbajsn0aeb8e420e13",
+        "X-RapidAPI-Key": YOUR_API_KEY,
         "X-RapidAPI-Host": "cat-breed-classification-api.p.rapidapi.com"
     }
 
@@ -29,7 +29,7 @@ def get_breed():
     breed = max(json.loads(response.text)["results"], key=lambda x: x["score"])["label"]    
     url1 = 'https://wiki-briefs.p.rapidapi.com/search'
     headers1 = {
-        'X-RapidAPI-Key': '504c8dfe17msh098fce599aa04b7p1c889ejsn7a14b39efa43',
+        'X-RapidAPI-Key': YOUR_API_KEY,
         'X-RapidAPI-Host': 'wiki-briefs.p.rapidapi.com'
     }
     params = {
